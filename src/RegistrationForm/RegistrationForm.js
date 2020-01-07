@@ -4,20 +4,20 @@ class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      error: null
     };
+    this.ssnRef = React.createRef();
   }
 
-  updateSsn(ssn) {
-    
-  }
 
-  validateSsn(ssn) {
-
-  }
-
-  handleSubmit(event) {
-
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const ssn = this.ssnRef.current.value.trim()
+    if (ssn.length !== 9) {
+      this.setState({error: "SSN is must be 9 characters"})
+    } else {
+      this.setState({error: null})
+    }
   }
 
   render() {
@@ -26,14 +26,14 @@ class RegistrationForm extends Component {
 
         <form className="registration" onSubmit={e => this.handleSubmit(e)}>
           <h2>Register</h2>
-          <div className="registration__hint">* required field</div>
           <div className="form-group">
-            <label htmlFor="ssn">SSN *</label>
+            <label htmlFor="ssn">SSN*</label>
             <input
               type="text"
               className="registration__control"
               name="ssn"
               id="ssn"
+              ref={this.ssnRef}
             />
           </div>
 
@@ -45,6 +45,7 @@ class RegistrationForm extends Component {
               Save
             </button>
           </div>
+          {this.state.error && <span>{this.state.error}</span>}
         </form>
     );
   }
