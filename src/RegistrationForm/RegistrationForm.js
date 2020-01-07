@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 
 class RegistrationForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null
-    };
-    this.ssnRef = React.createRef();
+
+  state = {ssn: {value: '', touched: false}};
+
+  validateSsn = () => {
+
+    if (this.state.ssn.value.length !== 9 && this.state.ssn.touched) {
+      return "SSN must be nine characters"
+    }
+
+    return null
   }
 
+  setSsn = (ssn) => {
+      this.setState({ssn: {value: ssn, touched: true}});
+  }; 
 
   handleSubmit = (event) => {
     event.preventDefault()
-    const ssn = this.ssnRef.current.value.trim()
-    if (ssn.length !== 9) {
-      this.setState({error: "SSN is must be 9 characters"})
-    } else {
-      this.setState({error: null})
-    }
+    // submission logic goes here
   }
 
   render() {
@@ -33,10 +35,10 @@ class RegistrationForm extends Component {
               className="registration__control"
               name="ssn"
               id="ssn"
-              ref={this.ssnRef}
+              onChange={e => this.setSsn(e.target.value)}
             />
           </div>
-
+          {this.validateSsn() && <span>{this.validateSsn()}</span>}
           <div className="registration__button__group">
             <button
               type="submit"
@@ -45,7 +47,7 @@ class RegistrationForm extends Component {
               Save
             </button>
           </div>
-          {this.state.error && <span>{this.state.error}</span>}
+          
         </form>
     );
   }
