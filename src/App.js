@@ -6,8 +6,8 @@ import RegistrationForm from './RegistrationForm/RegistrationForm'
 function App() {
   return (
     <div className="App">
-      {/* <ErrorBoundaryExample /> */}
-      <RegistrationForm />
+      <ErrorBoundaryExample />
+      {/* <RegistrationForm /> */}
     </div>
   );
 }
